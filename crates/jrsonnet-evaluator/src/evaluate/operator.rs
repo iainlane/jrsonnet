@@ -30,7 +30,13 @@ pub fn evaluate_add_op(a: &Val, b: &Val) -> Result<Val> {
 	Ok(match (a, b) {
 		(Str(v1), Str(v2)) => Str(StrValue::concat(v1.clone(), v2.clone())),
 
+		#[cfg(feature = "go-jsonnet-floats")]
+		(Num(a), Str(b)) => Val::string(format!("{a:.17}{b}")),
+		#[cfg(feature = "go-jsonnet-floats")]
+		(Str(a), Num(b)) => Val::string(format!("{a}{b:.17}")),
+		#[cfg(not(feature = "go-jsonnet-floats"))]
 		(Num(a), Str(b)) => Val::string(format!("{a}{b}")),
+		#[cfg(not(feature = "go-jsonnet-floats"))]
 		(Str(a), Num(b)) => Val::string(format!("{a}{b}")),
 
 		(Str(a), o) | (o, Str(a)) if a.is_empty() => Val::string(o.clone().to_string()?),

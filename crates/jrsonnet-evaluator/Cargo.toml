@@ -29,6 +29,7 @@ exp-null-coaelse = ["jrsonnet-parser/exp-null-coaelse"]
 
 # Improves performance, and implements some useful things using nightly-only features
 nightly = ["hashbrown/nightly"]
+go-jsonnet-floats = []
 
 [dependencies]
 jrsonnet-interner.workspace = true

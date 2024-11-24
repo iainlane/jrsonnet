@@ -205,7 +205,20 @@ fn manifest_json_ex_buf(
 				escape_string_json_buf(&flat, buf);
 			}
 		}
-		Val::Num(n) => write!(buf, "{n}").unwrap(),
+		Val::Num(n) => 'num: {
+			#[cfg(feature = "go-jsonnet-floats")]
+			{
+				if matches!(
+					options.mtype,
+					JsonFormatting::Manifest | JsonFormatting::ToString
+				) {
+					write!(buf, "{n:.17}").unwrap();
+					break 'num;
+				}
+			}
+
+			write!(buf, "{n}").unwrap();
+		}
 		#[cfg(feature = "exp-bigint")]
 		Val::BigInt(n) => {
 			if options.preserve_bigints {

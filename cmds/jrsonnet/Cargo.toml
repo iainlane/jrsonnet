@@ -31,6 +31,7 @@ exp-apply = []
 legacy-this-file = ["jrsonnet-cli/legacy-this-file"]
 
 nightly = ["jrsonnet-evaluator/nightly"]
+go-jsonnet-floats = ["jrsonnet-evaluator/go-jsonnet-floats"]
 
 [dependencies]
 jrsonnet-evaluator.workspace = true
